@@ -4,8 +4,9 @@ import Board from './components/Board';
 
 function App() {
 
-  const [history, setHistory] = useState([{squares: Array(9).fill(null)}]);
+  const [history, setHistory] = useState( [ {squares: Array(9).fill(null)} ]);
   const [xIsNext, setXIsNext] = useState(true);
+  const [stepNumber, setStepNumber] = useState(0);
 
   const calculateWinner = (squares) => {
     const lines = [
@@ -28,7 +29,7 @@ function App() {
     return null;
   }
 
-  const current = history[history.length - 1];
+  const current = history[stepNumber];
   const winner = calculateWinner(current.squares);
   let status;
   if (winner) {
@@ -38,16 +39,36 @@ function App() {
   }
 
   const handleClick = (i) => {
-    console.log(current.squares);
-    const newSquares = current.squares.slice();
+    const newHistory = history.slice(0, stepNumber + 1);
+    const newCurrent = newHistory[newHistory.length - 1];
+    const newSquares = newCurrent.squares.slice();
     if (calculateWinner(newSquares) || newSquares[i]) {
       return;
     } 
     newSquares[i] = xIsNext ? 'X' : 'O';
-    setHistory(...history, {squares: newSquares});
-    setXIsNext(prev => !prev)
+    setXIsNext(prev => !prev);
+    setHistory([...newHistory, {squares: newSquares}]);
+    // setStepNumber(newHistory.length);
+    setStepNumber(history.length - 1);
   }
+
+  const moves = history.map((item, index) => {
+    const desc = index ?
+    `Go to move #${index}` :
+    `Go to game start`;
+    return (
+      <li key={'history_item_' + index}>
+        <button className='move-button' onClick={() => jumpTo(index)}>{desc}</button>
+      </li>
+    )
+  });
   
+  const jumpTo = (index) => {
+    setStepNumber(index);
+    setXIsNext((index % 2) === 0);
+    // setHistory(history.slice(0, index + 1));
+  }
+
   return (
     <div className="game">
       <div className="game-board">
@@ -58,6 +79,7 @@ function App() {
       </div>
       <div className="game-info">
         <div className="status">{status}</div>
+        <ol className='history-list'>{moves}</ol>
       </div>
     </div>
   );

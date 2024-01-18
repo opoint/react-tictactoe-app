@@ -1,6 +1,32 @@
 .game {
   display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 .game-info {
-  margin-left:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-top:16px;
+  width:100%;
+}
+.history-list {
+  padding-left:0;
+  list-style:none;
+}
+.move-button {
+  width:200px;
+  margin-bottom:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:5px;
+  color:#fff;
+  font-weight:200;
+  text-decoration:none;
+  background-color:#27ae60;
+}
+.status {
+  margin-bottom:10px;
 }

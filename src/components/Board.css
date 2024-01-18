@@ -1,9 +1,9 @@
-.status {
-  margin-bottom:10px;
+.board-wrapper {
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:9px;
+  box-shadow:rgba(0,0,0,0.19);
 }
 .board-row {
   display:flex;
-}
-.board-row + .board-row {
-  margin-top:-1px;
 }
